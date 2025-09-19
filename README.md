@@ -5,7 +5,7 @@
 ### Running the program using CMake
 To run the program manually please run the following commands.
 
-In the root directory,
+In the root directory, please run the following commands in order.
 ```
 $ cmake .
 $ make
@@ -13,8 +13,8 @@ $ ./cg.out
 ```
 ### Running the program using Docker
 This program can be built into a docker container.
-Please run the following commands in order.
-To generate the docker container:
+
+In the root directory, please run the following commands in order.
 ```
 $ docker build -t change-generator .
 $ docker run -it change-generator
