@@ -27,6 +27,8 @@ DartConfiguration.tcl
 *.a
 *.lib
 *.out
+cg
+tests/cg_tests
 
 # Object files
 *.o
