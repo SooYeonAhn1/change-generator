@@ -16,6 +16,6 @@ FROM ubuntu:22.04
 
 WORKDIR /app
 
-COPY --from=builder /app/cg.out .
+COPY --from=builder /app/cg .
 
-CMD ["./cg.out"]
+CMD ["./cg"]
