@@ -12,6 +12,8 @@ compile_commands.json
 CTestTestfile.cmake
 _CPack_Packages/
 /Testing/*
+*.cmake
+DarConfiguration.tcl
 
 # IDE specific files (e.g., CLion)
 .idea/
