@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void setAmount() {
     char str[1024];
@@ -11,7 +12,11 @@ void setAmount() {
     do {
         printf("Insert Amount: ");
         fflush(stdout);
-        scanf("%lf", &input);
+        int ret_val = scanf("%lf", &input);
+        if (ret_val != 1) {
+            printf("Please provide a numeric value as input.\nTerminating the program...\n");
+            return;
+        }
         if (input < 0) {
             printf("Only non-negative values are accepted. Please provide a valid value.\n");     
         }

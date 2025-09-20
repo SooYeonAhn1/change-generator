@@ -5,13 +5,18 @@
 #include <sys/stat.h>
 #include "../include/change.h"
 
-char* testAmount(double amount[], size_t size) {
+char* testAmount(void * amount[], size_t size, size_t type) {
     FILE* input_file = tmpfile();
     if (input_file == NULL) {
         return NULL;
     }
     for (size_t i = 0; i < size; ++i) {
-        fprintf(input_file, "%lf", amount[i]);
+        if (type == 0) {
+            fprintf(input_file, "%lf", *((double *) amount + i));
+        } else {
+            fprintf(input_file, "%s", (char *) (*amount) + i);
+        }
+        
     }
     
     rewind(input_file);
@@ -64,10 +69,10 @@ char* testAmount(double amount[], size_t size) {
 int main(int argc, char** argv) {
     printf("Running change_generator tests...\n");
 
-    // TESTCASE 1: testing valid input 1.23.
-    printf("____________________\nTESTCASE 1: testing valid input 1.23.\n");
+    // TESTCASE 1: Testing valid input 1.23.
+    printf("____________________\nTESTCASE 1: Testing valid input 1.23.\n");
     double input1[] = {1.23};
-    char * output = testAmount(input1, 1);
+    char * output = testAmount((void *)&input1, 1, 0);
     if (output == NULL) {
         fprintf(stderr, "Error capturing output.\n");
         return 1;
@@ -87,10 +92,10 @@ int main(int argc, char** argv) {
     printf("End of testcase 1.\n____________________\n");
 
     
-    // TESTCASE 2: testing valid input 0.
-    printf("____________________\nTESTCASE 2: testing valid input 0.\n");
+    // TESTCASE 2: Testing valid input 0.
+    printf("____________________\nTESTCASE 2: Testing valid input 0.\n");
     double input2[] = {0.00};
-    output = testAmount(input2, 1);
+    output = testAmount((void *)&input2, 1, 0);
     if (output == NULL) {
         fprintf(stderr, "Error capturing output.\n");
         return 1;
@@ -111,10 +116,10 @@ int main(int argc, char** argv) {
     printf("End of testcase 2.\n____________________\n");
 
 
-    // TESTCASE 3: testing invalid input -1.23.
-    printf("____________________\nTESTCASE 3: testing invalid input -1.23.\n");
+    // TESTCASE 3: Testing invalid input -1.23.
+    printf("____________________\nTESTCASE 3: Testing invalid input -1.23.\n");
     double input3[] = {-1.23, 1.0};
-    output = testAmount(input3, 2);
+    output = testAmount((void *)&input3, 2, 0);
     if (output == NULL) {
         fprintf(stderr, "Error capturing output.\n");
         return 1;
@@ -133,6 +138,29 @@ int main(int argc, char** argv) {
 
     free(output);
     printf("End of testcase 3.\n____________________\n");
+
+    // TESTCASE 4: Testing invalid input abc.
+    printf("____________________\nTESTCASE 4: Testing invalid input abc.\n");
+    char * input4 = "abc";
+    output = testAmount((void *) &input4, 1, 1);
+    if (output == NULL) {
+        fprintf(stderr, "Error capturing output.\n");
+        return 1;
+    }
+
+    expected_output = "Insert Amount: Please provide a numeric value as input.\nTerminating the program...\n";
+
+    if (strcmp(output, expected_output) == 0) {
+        printf("Test Passed: Output matches expected value.\n");
+    } else {
+        printf("Test Failed: Output does not match expected value.\n");
+        printf("Expected: %s", expected_output);
+        printf("Actual: %s", output);
+        exit(1);
+    }
+
+    free(output);
+    printf("End of testcase 4.\n____________________\n");
 
     printf("\nAll tests passed!\n");
     return 0;
