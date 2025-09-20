@@ -1,5 +1,5 @@
 # Change Generator
-This program generates the amount of change you can generate for a given amount. This only supports values in the US currency with major denominations. Only non-negative values are accepted and any values that cannot be represented in US denominations (e.g. dollars and cents) will be unaccepted/discarded. The program will be terminated if a non-numeric value is provided as input.
+This program generates the amount of change you can generate for a given amount. This only supports values in the US currency denominations that have major circulation. Only non-negative values are accepted and any values that cannot be represented in US denominations (e.g. dollars and cents) will be unaccepted/discarded. The program will be terminated if a non-numeric value is provided as input.
 
 ## Running the program
 ### Running the program using CMake
